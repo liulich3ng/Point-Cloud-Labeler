@@ -5,7 +5,7 @@ import {cuboidTemplate, freeCamera, render} from "@/functions/useCanvas";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 import {Track, Shape} from "@/cores/annotations";
 
-function updatePickPosition(e: MouseEvent) {
+function updateMousePosition(e: MouseEvent) {
   const freeView = document.getElementById('perspective') as HTMLElement;
   mousePosition.x = (e.offsetX / freeView.clientWidth) * 2 - 1;
   mousePosition.y = -(e.offsetY / freeView.clientHeight) * 2 + 1;
@@ -13,16 +13,16 @@ function updatePickPosition(e: MouseEvent) {
 
 export function onPerspectiveViewMouseMove(e: MouseEvent) {
   if (mode.value === MODE.put) {
-    updatePickPosition(e);
-    const vec = new THREE.Vector3();
-    const pos = new THREE.Vector3();
-    vec.set(mousePosition.x, mousePosition.y, 0);
-    vec.unproject(freeCamera);
-    vec.sub(freeCamera.position).normalize();
-    const distance = -freeCamera.position.z / vec.z;
+    updateMousePosition(e);
+    setCuboidTemplateToMouse();
+    render();
+  }
+}
 
-    pos.copy(freeCamera.position).add(vec.multiplyScalar(distance));
-    cuboidTemplate.position.set(pos.x, pos.y, 0);
+export function onPerspectiveViewWheel(e: WheelEvent) {
+  if (mode.value === MODE.put) {
+    updateMousePosition(e);
+    setCuboidTemplateToMouse();
     render();
   }
 }
@@ -46,3 +46,21 @@ export function onPerspectiveViewClick(e: MouseEvent) {
     render();
   }
 }
+
+/**
+ * let cuboidTemplate move with mouse position
+ */
+function setCuboidTemplateToMouse() {
+  const vec = new THREE.Vector3(mousePosition.x, mousePosition.y, 0)
+    .unproject(freeCamera)
+    .sub(freeCamera.position)
+    .normalize();
+
+  const factor = -freeCamera.position.z / vec.z;
+
+  const pos = new THREE.Vector3()
+    .copy(freeCamera.position)
+    .add(vec.multiplyScalar(factor));
+  cuboidTemplate.position.set(pos.x, pos.y, 0)
+}
+

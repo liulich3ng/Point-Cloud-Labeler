@@ -24,7 +24,7 @@ import {PCDData} from "@/types/pcd";
 import {MODE} from "@/types/draw";
 import {
   onPerspectiveViewClick,
-  onPerspectiveViewMouseMove
+  onPerspectiveViewMouseMove, onPerspectiveViewWheel
 } from "@/functions/useMouse";
 import {
   annotationObjects,
@@ -101,6 +101,7 @@ function initEventListeners() {
 
   const perspective = document.getElementById('perspective') as HTMLCanvasElement;
   perspective.addEventListener('mousemove', onPerspectiveViewMouseMove);
+  perspective.addEventListener('wheel', onPerspectiveViewWheel);
   perspective.addEventListener('click', onPerspectiveViewClick);
 
   document.addEventListener('keydown', onKeyDown);
