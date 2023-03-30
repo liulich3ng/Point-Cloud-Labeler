@@ -10,6 +10,7 @@ import {
   LineSegments,
   Mesh,
   MeshBasicMaterial,
+  MOUSE,
   OrthographicCamera,
   PerspectiveCamera,
   Points,
@@ -19,12 +20,13 @@ import {
 } from "three";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {watch, watchEffect} from "vue";
-import {currentFrame, mode, pcdDataCache} from "@/store/item";
+import {currentFrame, mode, pcdDataCache} from "@/store/global";
 import {PCDData} from "@/types/pcd";
-import {MODE} from "@/types/draw";
+import {MODE} from "@/types/global";
 import {
   onPerspectiveViewClick,
-  onPerspectiveViewMouseMove, onPerspectiveViewWheel
+  onPerspectiveViewMouseMove,
+  onPerspectiveViewWheel
 } from "@/functions/useMouse";
 import {
   annotationObjects,
@@ -117,6 +119,10 @@ function initRenderer() {
   freeCamera.up.set(0, 0, 1);
   freeCamera.lookAt(0, 0, 0);
   freeControl = new OrbitControls(freeCamera, document.getElementById('perspective')!);
+  freeControl.mouseButtons = {
+    MIDDLE: MOUSE.PAN,
+    RIGHT: MOUSE.ROTATE
+  }
   freeControl.maxPolarAngle = Math.PI * 0.5;
   freeControl.addEventListener("change", render);
   freeControl.minDistance = 0.5;
