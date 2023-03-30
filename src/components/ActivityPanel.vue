@@ -1,11 +1,7 @@
 <template>
     <div class="activity-panel" v-show="activityPanelName!=null">
-        <div v-show="activityPanelName===Panels.OBJECTS">
-            Object List
-        </div>
-        <div v-show="activityPanelName===Panels.LABELS">
-            List List
-        </div>
+        <object-list v-show="activityPanelName===Panels.OBJECTS"></object-list>
+        <label-list v-show="activityPanelName===Panels.LABELS"></label-list>
     </div>
 </template>
 
@@ -13,12 +9,14 @@
 import {activityPanelName} from "@/store/global";
 import {NSpace} from "naive-ui";
 import {Panels} from "@/types/global";
+import ObjectList from "@/components/ObjectList.vue";
+import LabelList from "@/components/LabelList.vue";
 
 </script>
 
 <style scoped>
 .activity-panel {
-    display: inline-flex;
+    display: flex;
     height: 100%;
     width: var(--side-panel-width);
     border-right: 1px solid var(--border-color);
