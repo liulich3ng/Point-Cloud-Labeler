@@ -23,6 +23,8 @@ import GhostIcon from "@/components/GhostIcon.vue";
 import {NSpace} from 'naive-ui'
 import {activityPanelName} from "@/store/global";
 import {Panels} from "@/types/global";
+import {render} from "@/functions/useCanvas";
+import {nextTick} from "vue";
 
 
 function toggleActivityPanel(panelName: string) {
@@ -31,6 +33,7 @@ function toggleActivityPanel(panelName: string) {
   } else {
     activityPanelName.value = panelName;
   }
+  nextTick(render);
 }
 </script>
 
