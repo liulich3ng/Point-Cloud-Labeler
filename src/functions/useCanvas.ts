@@ -2,9 +2,12 @@ import * as THREE from "three";
 import {
   BoxGeometry,
   BufferGeometry,
-  Camera, EdgesGeometry,
+  Camera,
+  EdgesGeometry,
   Float32BufferAttribute,
-  Int32BufferAttribute, LineBasicMaterial, LineSegments,
+  Int32BufferAttribute,
+  LineBasicMaterial,
+  LineSegments,
   Mesh,
   MeshBasicMaterial,
   OrthographicCamera,
@@ -31,6 +34,7 @@ import {
 import {labels} from "@/config/labels";
 import {Shape} from "@/cores/annotations";
 import {Label} from "@/cores/labels";
+import {onKeyDown} from "@/functions/useKeyboard";
 
 const INF = 100000;
 let renderer: WebGLRenderer;
@@ -40,6 +44,7 @@ export let freeCamera: PerspectiveCamera;
 let topCamera: OrthographicCamera;
 let mainCamera: OrthographicCamera;
 let leftCamera: OrthographicCamera;
+let freeControl: OrbitControls;
 export const cuboidTemplate = makeCuboid();
 
 
@@ -93,8 +98,12 @@ function handleCurrentLabelIndexChange(index: number) {
 
 function initEventListeners() {
   window.addEventListener('resize', render, false);
-  document.getElementById('perspective')!.addEventListener('mousemove', onPerspectiveViewMouseMove)
-  document.getElementById('perspective')!.addEventListener('click', onPerspectiveViewClick)
+
+  const perspective = document.getElementById('perspective') as HTMLCanvasElement;
+  perspective.addEventListener('mousemove', onPerspectiveViewMouseMove);
+  perspective.addEventListener('click', onPerspectiveViewClick);
+
+  document.addEventListener('keydown', onKeyDown);
 }
 
 function initRenderer() {
@@ -106,7 +115,7 @@ function initRenderer() {
   freeCamera.position.set(100, 100, 100);
   freeCamera.up.set(0, 0, 1);
   freeCamera.lookAt(0, 0, 0);
-  const freeControl = new OrbitControls(freeCamera, document.getElementById('perspective')!);
+  freeControl = new OrbitControls(freeCamera, document.getElementById('perspective')!);
   freeControl.maxPolarAngle = Math.PI * 0.5;
   freeControl.addEventListener("change", render);
   freeControl.minDistance = 0.5;
@@ -219,4 +228,9 @@ function makeCuboid(points: number[] = [1, 1, 1, INF, INF, INF, 0, 0, 0], label:
   cube.position.set(points[3], points[4], points[5]);
   cube.rotation.set(points[6], points[7], points[8]);
   return cube;
+}
+
+export function resetCamera() {
+  freeControl.reset();
+  render();
 }
