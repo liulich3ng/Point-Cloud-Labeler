@@ -1,5 +1,5 @@
-import {mode} from "@/store/item";
-import {MODE} from "@/types/draw";
+import {mode} from "@/store/global";
+import {MODE} from "@/types/global";
 import {resetCamera} from "@/functions/useCanvas";
 
 export function onKeyDown(e: KeyboardEvent) {

@@ -1,5 +1,5 @@
 import {PCDData, PCDHeader} from "@/types/pcd";
-import {item, pcdDataCache} from "@/store/item";
+import {items, pcdDataCache} from "@/store/global";
 
 
 const PCDDatabaseName = 'PCDDatabase';
@@ -136,8 +136,8 @@ export function loadPCD() {
     const target = e.target as IDBOpenDBRequest;
     const db = target.result;
     const transaction = db.transaction(PCDTableName, 'readonly');
-    for (let index in item.urls) {
-      const url = item.urls[index];
+    for (let index in items.urls) {
+      const url = items.urls[index];
       const request = transaction.objectStore(PCDTableName).get(url);
       request.onsuccess = function (e) {
         if (request.result) {

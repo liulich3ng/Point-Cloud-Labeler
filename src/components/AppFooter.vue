@@ -36,7 +36,7 @@ import {
 } from '@vicons/ionicons5'
 import {NDivider} from 'naive-ui'
 import GhostIcon from "@/components/GhostIcon.vue";
-import {currentFrame, pcdDataCache} from "@/store/item";
+import {currentFrame, pcdDataCache} from "@/store/global";
 </script>
 
 <style scoped>

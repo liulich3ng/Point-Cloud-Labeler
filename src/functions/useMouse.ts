@@ -1,5 +1,5 @@
-import {currentFrame, mode, mousePosition} from "@/store/item";
-import {MODE} from "@/types/draw";
+import {currentFrame, mode, mousePosition} from "@/store/global";
+import {MODE} from "@/types/global";
 import * as THREE from "three";
 import {cuboidTemplate, freeCamera, render} from "@/functions/useCanvas";
 import {annotationObjects, currentLabel} from "@/store/annotations";
