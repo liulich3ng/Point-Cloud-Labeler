@@ -7,6 +7,9 @@ export function onKeyDown(e: KeyboardEvent) {
     case 'Escape':
       mode.value = MODE.default;
       break;
+    case 'a':
+      mode.value = MODE.put;
+      break;
     case 'r':
       resetCamera();
       break;
