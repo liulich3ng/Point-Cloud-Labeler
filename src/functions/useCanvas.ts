@@ -15,6 +15,7 @@ import {
   PerspectiveCamera,
   Points,
   PointsMaterial,
+  Raycaster,
   Scene,
   WebGLRenderer
 } from "three";
@@ -29,7 +30,7 @@ import {
   onPerspectiveViewWheel
 } from "@/functions/useMouse";
 import {
-  annotationObjects,
+  annotationObjectsAtCurrentFrame,
   currentLabel,
   currentLabelIndex
 } from "@/store/annotations";
@@ -40,8 +41,8 @@ import {onKeyDown} from "@/functions/useKeyboard";
 
 const INF = 100000;
 let renderer: WebGLRenderer;
-let scene: Scene;
-let rayCaster;
+export let scene: Scene;
+export let rayCaster: Raycaster;
 export let freeCamera: PerspectiveCamera;
 let topCamera: OrthographicCamera;
 let mainCamera: OrthographicCamera;
@@ -70,13 +71,10 @@ function makeScene() {
     scene.add(new THREE.AxesHelper(10));
 
     scene.add(cuboidTemplate);
-    console.log(cuboidTemplate)
 
-    annotationObjects.forEach((annotation, index) => {
-      if (annotation instanceof Shape && annotation.frameNumber === currentFrame.value) {
-        const cuboid = makeCuboid(annotation.points, annotation.label);
-        scene.add(cuboid);
-      }
+    annotationObjectsAtCurrentFrame.value.forEach((annotation) => {
+      const cuboid = makeCuboid(annotation.points, annotation.label);
+      scene.add(cuboid);
     })
 
     render();
@@ -113,6 +111,7 @@ function initRenderer() {
   const canvas = document.getElementById("canvas") as HTMLCanvasElement;
   renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   scene = new THREE.Scene();
+  rayCaster = new THREE.Raycaster();
 
   freeCamera = new PerspectiveCamera();
   freeCamera.position.set(100, 100, 100);

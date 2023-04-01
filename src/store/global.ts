@@ -3,7 +3,7 @@ import {PCDData} from "@/types/pcd";
 import {MODE, Panels} from "@/types/global";
 
 export const items = {
-  urls: ['./1.pcd', './2.pcd', './3.pcd', './4.pcd', './5.pcd', './6.pcd']
+  urls: ['./data/1.pcd', './data/2.pcd', './data/3.pcd', './data/4.pcd', './data/5.pcd', './data/6.pcd', './data/7.pcd']
 }
 
 export const pcdDataCache: PCDData[] = reactive([]);

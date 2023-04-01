@@ -1,9 +1,14 @@
 import {currentFrame, mode, mousePosition} from "@/store/global";
 import {MODE} from "@/types/global";
 import * as THREE from "three";
-import {cuboidTemplate, freeCamera, render} from "@/functions/useCanvas";
+import {
+  cuboidTemplate,
+  freeCamera,
+  render,
+  rayCaster, scene
+} from "@/functions/useCanvas";
 import {annotationObjects, currentLabel} from "@/store/annotations";
-import {Track, Shape} from "@/cores/annotations";
+import {Shape} from "@/cores/annotations";
 
 function updateMousePosition(e: MouseEvent) {
   const freeView = document.getElementById('perspective') as HTMLElement;
@@ -16,6 +21,11 @@ export function onPerspectiveViewMouseMove(e: MouseEvent) {
     updateMousePosition(e);
     setCuboidTemplateToMouse();
     render();
+  } else if (mode.value === MODE.default) {
+    updateMousePosition(e);
+    rayCaster.setFromCamera(mousePosition, freeCamera);
+    const intersectObjects = rayCaster.intersectObjects(scene.children, false);
+    console.log(scene)
   }
 }
 
