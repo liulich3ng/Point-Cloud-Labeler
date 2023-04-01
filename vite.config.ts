@@ -10,6 +10,9 @@ export default defineConfig(({command, mode}) => {
         '@': join(root, "src"),
       }
     },
+    server: {
+      host: true
+    },
     plugins: [vue()]
   }
 })
