@@ -17,7 +17,7 @@ import AppHeader from "@/components/AppHeader.vue"
 import AppSideBar from "@/components/AppSideBar.vue"
 import AppEditor from "@/components/AppEditor.vue"
 import AppStatusBar from "@/components/AppFooter.vue"
-import {loadPCD} from "@/functions/usePCD";
+import {loadPCD} from "@/functions/usePointCloud";
 
 loadPCD()
 </script>
