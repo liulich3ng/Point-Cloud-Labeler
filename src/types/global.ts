@@ -1,6 +1,7 @@
 export enum MODE {
   default,
-  put
+  put,
+  drag
 }
 
 export enum Panels {

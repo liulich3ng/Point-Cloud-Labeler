@@ -12,7 +12,7 @@
  */
 import {AxesHelper, Group, Scene} from "three";
 import {makeCuboid} from "@/functions/useCuboid";
-import {currentFrame, PointsRecord} from "@/store/global";
+import {POINTS} from "@/store/global";
 import {annotationObjectsAtCurrentFrame} from "@/store/annotations";
 
 export const SCENE = new Scene();
@@ -28,10 +28,10 @@ export function makeScene() {
   SCENE.add(drawHelper);
   SCENE.add(ANNOTATIONS);
 
-  if (PointsRecord[currentFrame.value]) {
-    SCENE.add(PointsRecord[currentFrame.value]);
+  if (POINTS) {
+    SCENE.add(POINTS.value);
   }
-  console.log(annotationObjectsAtCurrentFrame.value.length);
+
   annotationObjectsAtCurrentFrame.value.forEach((annotation) => {
     const cuboid = makeCuboid(annotation.points, annotation.label.color);
     ANNOTATIONS.add(cuboid);

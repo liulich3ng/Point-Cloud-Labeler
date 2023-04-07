@@ -1,10 +1,10 @@
-import {currentFrame, mode, mousePosition} from "@/store/global";
+import {currentFrame, mode, mousePosition, POINTS} from "@/store/global";
 import {MODE} from "@/types/global";
 import {render} from "@/functions/useRender";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 import {Shape} from "@/cores/annotations";
 import {Raycaster, Vector3} from "three";
-import {drawHelper, SCENE} from "@/functions/useScene";
+import {ANNOTATIONS, drawHelper, SCENE} from "@/functions/useScene";
 import {perspectiveCamera} from "@/functions/useCamera";
 
 const raycaster = new Raycaster();
@@ -23,9 +23,13 @@ export function onPerspectiveViewMouseMove(e: MouseEvent) {
   } else if (mode.value === MODE.default) {
     updateMousePosition(e);
     raycaster.setFromCamera(mousePosition, perspectiveCamera);
-    const intersectObjects = raycaster.intersectObjects(SCENE.children, false);
+    const intersectObjects = raycaster.intersectObject(POINTS.value, false);
+    if(intersectObjects.length>0){
+      render()
+    } else {
 
-    // console.log(scene)
+    }
+
   }
 }
 
