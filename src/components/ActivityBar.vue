@@ -23,7 +23,7 @@ import GhostIcon from "@/components/GhostIcon.vue";
 import {NSpace} from 'naive-ui'
 import {activityPanelName} from "@/store/global";
 import {Panels} from "@/types/global";
-import {render} from "@/functions/useCanvas";
+import {render} from "@/functions/useRender";
 import {nextTick} from "vue";
 
 

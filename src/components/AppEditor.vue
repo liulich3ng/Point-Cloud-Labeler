@@ -1,20 +1,28 @@
 <template>
-    <div id="editor">
-        <div id="perspective"></div>
-        <div class="three">
-            <div id="top">top</div>
-            <div id="main">main</div>
-            <div id="left">left</div>
-        </div>
-        <canvas id="canvas"></canvas>
-    </div>
+	<div id="editor">
+		<div id="perspective"></div>
+		<div class="three">
+			<div id="top">top</div>
+			<div id="main">main</div>
+			<div id="left">left</div>
+		</div>
+		<canvas id="canvas"></canvas>
+	</div>
 </template>
 
 <script setup lang="ts">
 import {onMounted} from "vue";
-import {initCanvas} from "@/functions/useCanvas";
+import {initRenderer} from "@/functions/useRender";
+import {initCamera} from "@/functions/useCamera";
+import {initWatcher} from "@/functions/useWatcher";
+import {initEventListeners} from "@/functions/useListener";
 
-onMounted(initCanvas)
+onMounted(() => {
+  initRenderer();
+  initCamera();
+  initWatcher();
+  initEventListeners();
+});
 </script>
 
 <style scoped>

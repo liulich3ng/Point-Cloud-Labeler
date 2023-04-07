@@ -1,6 +1,6 @@
 import {mode} from "@/store/global";
 import {MODE} from "@/types/global";
-import {resetCamera} from "@/functions/useCanvas";
+import {resetCamera} from "@/functions/useCamera";
 
 export function onKeyDown(e: KeyboardEvent) {
   switch (e.key) {

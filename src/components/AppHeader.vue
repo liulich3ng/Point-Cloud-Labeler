@@ -34,7 +34,7 @@ import GhostIcon from "@/components/GhostIcon.vue";
 import {mode} from "@/store/global";
 import {MODE} from "@/types/global";
 import LabelSelect from "@/components/LabelSelect.vue";
-import {resetCamera} from "@/functions/useCanvas";
+import {resetCamera} from "@/functions/useCamera";
 </script>
 
 <style scoped>
