@@ -6,7 +6,7 @@ export const perspectiveCamera: PerspectiveCamera = new PerspectiveCamera();
 export const topCamera: OrthographicCamera = new OrthographicCamera(-1, 1, 1, -1);
 export const mainCamera: OrthographicCamera = new OrthographicCamera(-1, 1, 1, -1);
 export const leftCamera: OrthographicCamera = new OrthographicCamera(-1, 1, 1, -1);
-let perspectiveControl: OrbitControls;
+export let perspectiveControl: OrbitControls;
 
 export function initCamera() {
   perspectiveCamera.position.set(20, 20, 20);
