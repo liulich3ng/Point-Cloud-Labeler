@@ -32,7 +32,7 @@ export function loadPCD() {
         } else {
           // otherwise load from remote
           loadPCDFromRemote(url).then(data => {
-            PointsRecord[index] = makePoints(request.result);
+            PointsRecord[index] = makePoints(data);
             const transaction = db.transaction(TABLE, 'readwrite');
             transaction.objectStore(TABLE).add(data);
           }).catch(e => {

@@ -28,7 +28,7 @@ export function makeScene() {
   SCENE.add(drawHelper);
   SCENE.add(ANNOTATIONS);
 
-  if (POINTS) {
+  if (POINTS.value) {
     SCENE.add(POINTS.value);
   }
 
