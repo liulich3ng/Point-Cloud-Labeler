@@ -9,14 +9,14 @@ export const leftCamera: OrthographicCamera = new OrthographicCamera(-1, 1, 1, -
 let perspectiveControl: OrbitControls;
 
 export function initCamera() {
-  perspectiveCamera.position.set(100, 100, 100);
+  perspectiveCamera.position.set(20, 20, 20);
   perspectiveCamera.up.set(0, 0, 1);
   perspectiveCamera.lookAt(0, 0, 0);
   perspectiveControl = new OrbitControls(perspectiveCamera, document.getElementById('perspective')!);
   perspectiveControl.mouseButtons = {
     MIDDLE: MOUSE.PAN,
     RIGHT: MOUSE.ROTATE
-  }
+  };
   perspectiveControl.maxPolarAngle = Math.PI * 0.5;
   perspectiveControl.addEventListener("change", render);
   perspectiveControl.minDistance = 0.5;

@@ -25,6 +25,8 @@ function handleModeChange(mode: MODE) {
     render();
   } else if (mode === MODE.put) {
 
+  } else if (mode === MODE.drag) {
+
   }
 }
 
