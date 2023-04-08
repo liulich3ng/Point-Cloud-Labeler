@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import {activityPanelName} from "@/store/global";
-import {NSpace} from "naive-ui";
 import {Panels} from "@/types/global";
 import ObjectList from "@/components/ObjectList.vue";
 import LabelList from "@/components/LabelList.vue";
