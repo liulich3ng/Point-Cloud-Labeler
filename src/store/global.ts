@@ -12,15 +12,10 @@ export const currentFrame = ref(1);
 
 export const mode = ref<MODE>(MODE.default);
 
-export const mousePosition = {
-  x: 0,
-  y: 0
-};
-
 export const activityPanelName = ref<string | null>(Panels.OBJECTS);
 
 export const POINTS = computed(() => {
-  return PointsRecord[currentFrame.value];
+  return PointsRecord[currentFrame.value - 1];
 });
 
 export const FramesCount = computed(() => {
