@@ -3,8 +3,7 @@ import {mode} from "@/store/global";
 import {MODE} from "@/types/global";
 import {drawHelper, makeScene} from "@/functions/useScene";
 import {render} from "@/functions/useRender";
-import {currentLabelIndex} from "@/store/annotations";
-import {labels} from "@/config/labels";
+import {currentLabel, } from "@/store/annotations";
 import {LineBasicMaterial, LineSegments} from "three";
 
 export function initWatcher() {
@@ -14,24 +13,25 @@ export function initWatcher() {
     render();
   });
 
-  // todo: refactor drawHelper?
-  watch(mode, handleModeChange, {immediate: true});
-  watch(currentLabelIndex, handleCurrentLabelIndexChange, {immediate: true});
+  watchEffect(resetDrawHelper);
 }
 
-function handleModeChange(mode: MODE) {
-  if (mode === MODE.default) {
-    drawHelper.position.set(Infinity, Infinity, Infinity);
-    render();
-  } else if (mode === MODE.put) {
-
-  } else if (mode === MODE.drag) {
-
-  }
-}
-
-function handleCurrentLabelIndexChange(index: number) {
-  drawHelper.material.color.set(labels[index].color);
+function resetDrawHelper() {
+  // todo: refactor drawHelper to a singleton class?
+  drawHelper.material.color.set(currentLabel.value.color);
   const edges = drawHelper.children[0] as LineSegments;
-  (edges.material as LineBasicMaterial).color.set(labels[index].color);
+  (edges.material as LineBasicMaterial).color.set(currentLabel.value.color);
+  const {x, y, z} = currentLabel.value.defaultSize;
+  drawHelper.scale.set(x, y, z);
+  drawHelper.rotation.set(0, 0, 0);
+  switch (mode.value) {
+    case MODE.default:
+      drawHelper.position.set(Infinity, Infinity, Infinity);
+      render();
+      break;
+    case MODE.put:
+      break;
+    case MODE.drag:
+      break;
+  }
 }
