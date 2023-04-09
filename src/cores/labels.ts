@@ -1,3 +1,4 @@
+import {Vector3} from "three";
 
 export interface Attribute {
   readonly name: string;
@@ -14,9 +15,23 @@ export interface Label {
   attributes: Attribute[];
 }
 
+export interface PointCloudLabel extends Label {
+  defaultSize: { x: number, y: number, z: number };
+}
 
-export type LabelType = 'rectangle' | 'polygon' | 'polyline' | 'points' | 'ellipse' | 'cuboid' | 'skeleton' | 'mask' | 'tag' | 'any';
+export type LabelType =
+  'rectangle'
+  | 'polygon'
+  | 'polyline'
+  | 'points'
+  | 'ellipse'
+  | 'cuboid'
+  | 'skeleton'
+  | 'mask'
+  | 'tag'
+  | 'any';
 export type AttrInputType = 'select' | 'radio' | 'checkbox' | 'number' | 'text';
+
 export enum ShapeType {
   RECTANGLE = 'rectangle',
   POLYGON = 'polygon',
