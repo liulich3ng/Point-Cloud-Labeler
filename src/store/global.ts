@@ -21,3 +21,5 @@ export const POINTS = computed(() => {
 export const FramesCount = computed(() => {
   return PointsRecord.length;
 });
+
+export const groundHeight = ref(0);
