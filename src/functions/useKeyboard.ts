@@ -13,5 +13,8 @@ export function onKeyDown(e: KeyboardEvent) {
     case 'r':
       resetCamera();
       break;
+    case 'd':
+      mode.value = MODE.drag;
+      break;
   }
 }
