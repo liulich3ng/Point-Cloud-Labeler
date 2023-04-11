@@ -5,6 +5,7 @@ import {drawHelper, makeScene} from "@/functions/useScene";
 import {render} from "@/functions/useRender";
 import {currentLabel, } from "@/store/annotations";
 import {LineBasicMaterial, LineSegments} from "three";
+import {INF} from "@/config/labels";
 
 export function initWatcher() {
   watchEffect(() => {
@@ -26,7 +27,7 @@ function resetDrawHelper() {
   drawHelper.rotation.set(0, 0, 0);
   switch (mode.value) {
     case MODE.default:
-      drawHelper.position.set(Infinity, Infinity, Infinity);
+      drawHelper.position.set(INF, INF, INF);
       render();
       break;
     case MODE.put:

@@ -22,19 +22,21 @@ export const drawHelper = makeCuboid();
 
 
 export function makeScene() {
+  if (!POINTS.value) {
+    return;
+  }
   SCENE.clear();
   ANNOTATIONS.clear();
+
   SCENE.add(axesHelper);
   SCENE.add(drawHelper);
-  SCENE.add(ANNOTATIONS);
 
-  if (POINTS.value) {
-    SCENE.add(POINTS.value);
-  }
+  SCENE.add(POINTS.value);
 
   annotationObjectsAtCurrentFrame.value.forEach((annotation) => {
     const cuboid = makeCuboid(annotation.points, annotation.label.color);
     ANNOTATIONS.add(cuboid);
   });
+  SCENE.add(ANNOTATIONS);
 }
 

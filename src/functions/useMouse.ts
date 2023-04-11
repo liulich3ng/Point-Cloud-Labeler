@@ -7,7 +7,7 @@ import {Raycaster, Vector2, Vector3} from "three";
 import {drawHelper} from "@/functions/useScene";
 import {perspectiveCamera, perspectiveControl} from "@/functions/useCamera";
 
-const raycaster = new Raycaster();
+export const raycaster = new Raycaster();
 const mouseCurrent = new Vector2();
 const mouseBegin = new Vector2();
 const mouseBeginToGround = new Vector3();

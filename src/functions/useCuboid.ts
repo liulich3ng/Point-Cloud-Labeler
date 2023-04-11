@@ -13,6 +13,7 @@ import {
  */
 export function makeCuboid(points: number[] = [1, 1, 1, 0, 0, 0, 0, 0, 0], color = '#0000FF') {
   const geometry = new BoxGeometry();
+  geometry.computeBoundingBox();
   const material = new MeshBasicMaterial({
     color: color,
     transparent: true,

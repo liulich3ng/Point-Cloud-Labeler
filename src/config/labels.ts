@@ -1,5 +1,7 @@
 import {PointCloudLabel} from "@/cores/labels";
 
+export const INF = 10000;
+
 export const labels: PointCloudLabel[] = [
   {
     name: 'car',

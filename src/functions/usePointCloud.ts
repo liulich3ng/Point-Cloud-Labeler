@@ -1,12 +1,15 @@
 import {PCDData, PCDHeader} from "@/types/pcd";
-import {items, PointsRecord} from "@/store/global";
+import {items, POINTS, PointsRecord} from "@/store/global";
 import {
+  BufferAttribute,
   BufferGeometry,
   Float32BufferAttribute,
-  Int32BufferAttribute,
+  Int32BufferAttribute, Mesh, Object3D,
   Points,
-  PointsMaterial
+  PointsMaterial, Vector3
 } from "three";
+import {raycaster} from "@/functions/useMouse";
+import {drawHelper} from "@/functions/useScene";
 
 
 const DB = 'PCDDatabase';
@@ -17,7 +20,7 @@ export function loadPCD() {
     const target = e.target as IDBOpenDBRequest;
     const db = target.result;
     db.createObjectStore(TABLE, {keyPath: 'url'});
-  }
+  };
 
   window.indexedDB.open(DB).onsuccess = function (e) {
     const target = e.target as IDBOpenDBRequest;
@@ -37,11 +40,11 @@ export function loadPCD() {
             transaction.objectStore(TABLE).add(data);
           }).catch(e => {
             console.error(e);
-          })
+          });
         }
-      }
+      };
     }
-  }
+  };
 }
 
 function loadPCDFromRemote(url: string) {
@@ -51,7 +54,7 @@ function loadPCDFromRemote(url: string) {
       const result = parse(data);
       result.url = url;
       return result;
-    })
+    });
 }
 
 // cost ~50ms for ~5MB file
@@ -102,7 +105,6 @@ function parse(data: ArrayBuffer): PCDData {
   }
   return {
     url: '',
-    header,
     position: new Float32Array(position),
     color: new Float32Array(color),
     normal: new Float32Array(normal),
@@ -167,7 +169,6 @@ function parseHeader(data: string) {
   return header;
 }
 
-
 function makePoints(data: PCDData) {
   const {
     position,
@@ -181,16 +182,75 @@ function makePoints(data: PCDData) {
     geometry.setAttribute("position", new Float32BufferAttribute(position, 3));
   if (normal.length > 0)
     geometry.setAttribute("normal", new Float32BufferAttribute(normal, 3));
-  if (color.length > 0)
+  if (color.length > 0) {
     geometry.setAttribute("color", new Float32BufferAttribute(color, 3));
+  } else {
+    geometry.setAttribute("color", new Float32BufferAttribute(new Array(position.length).fill(1), 3));
+  }
   if (intensity.length > 0)
     geometry.setAttribute("intensity", new Float32BufferAttribute(intensity, 1));
   if (label.length > 0)
     geometry.setAttribute("label", new Int32BufferAttribute(label, 1));
   geometry.computeBoundingSphere();
-  const material = new PointsMaterial({size: 0.005});
-  if (color.length > 0) {
-    material.vertexColors = true;
+  const material = new PointsMaterial({
+    size: 0.005,
+    vertexColors: true,
+  });
+
+  const points = new Points(geometry, material);
+  console.log(points);
+  return points;
+}
+
+export function getPointsInBoxBF(box: Object3D) {
+  const time = Date.now();
+  let count = 0;
+  const positions = POINTS.value.geometry.getAttribute("position") as BufferAttribute;
+  const corner1 = new Vector3(-Infinity, -Infinity, -Infinity);
+  const corner2 = new Vector3(Infinity, Infinity, Infinity);
+  for (let i = 0; i < positions.count; ++i) {
+    const x = positions.array[i * 3];
+    const y = positions.array[i * 3 + 1];
+    const z = positions.array[i * 3 + 2];
+    const local = box.worldToLocal(new Vector3(x, y, z));
+    if (Math.abs(local.x) < box.scale.x / 2
+      && Math.abs(local.y) < box.scale.y / 2
+      && Math.abs(local.z) < box.scale.z / 2) {
+      count++;
+      if (local.x > corner1.x) corner1.x = local.x;
+      if (local.y > corner1.y) corner1.y = local.y;
+      if (local.z > corner1.z) corner1.z = local.z;
+      if (local.x < corner2.x) corner2.x = local.x;
+      if (local.y < corner2.y) corner2.y = local.y;
+      if (local.z < corner2.z) corner2.z = local.z;
+    }
   }
-  return new Points(geometry, material);
+
+  console.log('count ', count);
+  console.log('max ', corner1);
+  console.log('min  ', corner2);
+  console.log('cost ', Date.now() - time, ' ms');
+}
+
+export function getPointsInBox(box: Mesh) {
+  const time = Date.now();
+  let count = 0;
+  const positions = POINTS.value.geometry.getAttribute("position") as BufferAttribute;
+  const colors = POINTS.value.geometry.getAttribute("color") as BufferAttribute;
+  const corner1 = new Vector3(-Infinity, -Infinity, -Infinity);
+  const corner2 = new Vector3(Infinity, Infinity, Infinity);
+  const cursor = new Vector3();
+  for (let i = 0; i < positions.count; ++i) {
+    cursor.fromBufferAttribute(positions, i);
+    const local = box.worldToLocal(cursor);
+    if (Math.abs(local.x) < 1 / 2
+      && Math.abs(local.y) < 1 / 2
+      && Math.abs(local.z) < 1 / 2) {
+      count++;
+      colors.setX(i, 0);
+    }
+  }
+  colors.needsUpdate = true;
+  console.log('count ', count);
+  console.log('cost ', Date.now() - time, ' ms');
 }

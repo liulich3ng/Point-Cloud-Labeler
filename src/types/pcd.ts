@@ -17,7 +17,6 @@ export interface PCDHeader {
 
 export interface PCDData {
   url: string,
-  header: PCDHeader,
   position: Float32Array,
   color: Float32Array,
   normal: Float32Array,
