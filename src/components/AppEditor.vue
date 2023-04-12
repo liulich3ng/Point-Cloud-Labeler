@@ -16,12 +16,14 @@ import {initRenderer} from "@/functions/useRender";
 import {initCamera} from "@/functions/useCamera";
 import {initWatcher} from "@/functions/useWatcher";
 import {initEventListeners} from "@/functions/useListener";
+import {initSelectHelper} from "@/functions/useSelect";
 
 onMounted(() => {
   initRenderer();
   initCamera();
   initWatcher();
   initEventListeners();
+  initSelectHelper();
 });
 </script>
 
