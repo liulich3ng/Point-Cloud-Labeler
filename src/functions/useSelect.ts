@@ -43,7 +43,7 @@ export function initSelectHelper() {
     element.style.height = (pointBottomRight.y - pointTopLeft.y) + 'px';
   }
 
-  function onSelectOver(event: MouseEvent) {
+  function onSelectOver() {
     isLeftDown = false;
     element.parentElement?.removeChild(element);
   }
