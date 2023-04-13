@@ -198,7 +198,6 @@ function makePoints(data: PCDData) {
   });
 
   const points = new Points(geometry, material);
-  console.log(points);
   return points;
 }
 

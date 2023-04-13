@@ -4,7 +4,7 @@ import {render} from "@/functions/useRender";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 import {Shape} from "@/cores/annotations";
 import {Raycaster, Vector2, Vector3} from "three";
-import {drawHelper} from "@/functions/useScene";
+import {drawHelper, SCENE} from "@/functions/useScene";
 import {perspectiveCamera, perspectiveControl} from "@/functions/useCamera";
 
 export const raycaster = new Raycaster();
@@ -23,26 +23,25 @@ export function onPerspectiveViewMousemove(e: MouseEvent) {
       drawHelper.position.copy(mouseToGround());
       break;
     case MODE.drag:
-      if (e.buttons !== 1) return;
-      dragBox();
       break;
   }
   render();
 }
 
 export function onPerspectiveViewMousedown(e: MouseEvent) {
+  computeCurrentMouse(e);
   switch (mode.value) {
     case MODE.default:
       break;
     case MODE.put:
       break;
     case MODE.drag:
-      mouseBeginToGround.copy(mouseToGround());
       break;
   }
 }
 
 export function onPerspectiveViewMouseup(e: MouseEvent) {
+
   switch (mode.value) {
     case MODE.default:
       break;
@@ -53,10 +52,6 @@ export function onPerspectiveViewMouseup(e: MouseEvent) {
       render();
       break;
     case MODE.drag:
-      if (e.button !== 0) return;
-      finishDraw();
-      mode.value = MODE.default;
-      render();
       break;
   }
 }
@@ -110,19 +105,4 @@ function finishDraw() {
   ];
   const shape = new Shape(currentLabel.value, currentFrame.value, points);
   annotationObjects.push(shape);
-}
-
-function dragBox() {
-  const mouseCurrentToGround = mouseToGround();
-  const angle1 = perspectiveControl.getAzimuthalAngle();
-  const angle2 = Math.atan((mouseCurrentToGround.y - mouseBeginToGround.y) / (mouseCurrentToGround.x - mouseBeginToGround.x));
-  const angle3 = angle2 - angle1;
-  const diagonal = mouseCurrentToGround.distanceTo(mouseBeginToGround);
-  const w = diagonal * Math.cos(angle3);
-  const h = diagonal * Math.sin(angle3);
-  drawHelper.scale.set(w, h, currentLabel.value.defaultSize.z);
-  drawHelper.position.copy(mouseCurrentToGround.add(mouseBeginToGround).divideScalar(2));
-  drawHelper.position.add(new Vector3(0, 0, currentLabel.value.defaultSize.z / 2));
-  // rotate with Z axis
-  drawHelper.setRotationFromAxisAngle(new Vector3(0, 0, 1), angle1);
 }

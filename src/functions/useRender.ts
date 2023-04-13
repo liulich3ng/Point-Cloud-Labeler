@@ -17,6 +17,7 @@ let renderer: WebGLRenderer;
 export function initRenderer() {
   renderer = new THREE.WebGLRenderer({
     canvas: document.getElementById("canvas") as HTMLCanvasElement,
+    powerPreference: 'high-performance',
     alpha: true
   });
 }
