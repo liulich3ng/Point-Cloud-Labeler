@@ -16,7 +16,8 @@ import {initRenderer} from "@/functions/useRender";
 import {initCamera} from "@/functions/useCamera";
 import {initWatcher} from "@/functions/useWatcher";
 import {initEventListeners} from "@/functions/useListener";
-import {initDragHelper} from "@/functions/useSelect";
+import {initDragHelper} from "@/functions/useDrag";
+import {initPutHelper} from "@/functions/usePut";
 
 onMounted(() => {
   initRenderer();
@@ -24,6 +25,7 @@ onMounted(() => {
   initWatcher();
   initEventListeners();
   initDragHelper();
+  initPutHelper();
 });
 </script>
 
