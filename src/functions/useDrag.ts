@@ -1,4 +1,4 @@
-import {BufferAttribute, BufferGeometry, Vector2, Vector3} from 'three';
+import {BufferAttribute, BufferGeometry, Color, Vector2, Vector3} from 'three';
 import {currentFrame, mode, POINTS} from "@/store/global";
 import {MODE} from "@/types/global";
 import {perspectiveCamera, perspectiveControl} from "@/functions/useCamera";
@@ -10,6 +10,7 @@ import {makeCuboid} from "@/functions/useCuboid";
 import {SCENE} from "@/functions/useScene";
 import {Shape} from "@/cores/annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
+import {BBox} from "@/cores/geometry";
 // todo: usage
 // todo: select box color
 // todo: 新增标注物会导致点云颜色重新绘制？
@@ -21,8 +22,6 @@ export function initDragHelper() {
   const startPoint = new Vector2();
   const pointTopLeft = new Vector2();
   const pointBottomRight = new Vector2();
-  let isLeftDown = false;
-
 
   const perspective = document.getElementById('perspective') as HTMLElement;
   perspective.addEventListener('mousedown', onDragStart);
@@ -57,54 +56,39 @@ export function initDragHelper() {
   }
 
   function onDragOver(event: MouseEvent) {
+    if (event.button !== 0 || mode.value !== MODE.drag) return;
+
     const angle = perspectiveControl.getAzimuthalAngle();
     const axisZ = new Vector3(0, 0, 1);
 
-    if (event.button !== 0 || mode.value !== MODE.drag) return;
-
     element.parentElement?.removeChild(element);
     const position = POINTS.value.geometry.getAttribute('position') as BufferAttribute;
-    const colors = POINTS.value.geometry.getAttribute('color') as BufferAttribute;
     const point = new Vector3();
-
 
     const minX = (pointTopLeft.x / perspective.clientWidth) * 2 - 1;
     const minY = -(pointBottomRight.y / perspective.clientHeight) * 2 + 1;
     const maxX = (pointBottomRight.x / perspective.clientWidth) * 2 - 1;
     const maxY = -(pointTopLeft.y / perspective.clientHeight) * 2 + 1;
 
-    let nx = INF;
-    let ny = INF;
-    let nz = INF;
-    let px = -INF;
-    let py = -INF;
-    let pz = -INF;
+    const bbox = new BBox();
 
-    let count = 0;
+    const selectedPoints = [];
     for (let i = 0; i < position.count; ++i) {
-      point.fromBufferAttribute(position, i);
-      point.project(perspectiveCamera);
+      point.fromBufferAttribute(position, i).project(perspectiveCamera);
       if (point.x > minX && point.y > minY && point.x < maxX && point.y < maxY) {
-        colors.setX(i, 0);
-        point.fromBufferAttribute(position, i);
-        point.applyAxisAngle(axisZ, -angle);
-        nx = Math.min(nx, point.x);
-        ny = Math.min(ny, point.y);
-        nz = Math.min(nz, point.z);
-        px = Math.max(px, point.x);
-        py = Math.max(py, point.y);
-        pz = Math.max(pz, point.z);
-        count++;
+        selectedPoints.push(point.fromBufferAttribute(position, i).applyAxisAngle(axisZ, -angle).clone());
+        bbox.grow(point);
       }
     }
-    if (count < 10) return;
-    const center = new Vector3((nx + px) / 2, (ny + py) / 2, (nz + pz) / 2);
-    const scale = new Vector3(px - nx, py - ny, pz - nz);
+    if (selectedPoints.length < 10) return;
+    console.log();
+    const center = bbox.getCenter();
+    const scale = bbox.getScale();
     center.applyAxisAngle(axisZ, angle);
     const points = [
-      px - nx,
-      py - ny,
-      pz - nz,
+      scale.x,
+      scale.y,
+      scale.z,
       center.x,
       center.y,
       center.z,
@@ -114,7 +98,6 @@ export function initDragHelper() {
     ];
     const shape = new Shape(currentLabel.value, currentFrame.value, points);
     annotationObjects.push(shape);
-    colors.needsUpdate = true;
   }
 }
 

@@ -1,26 +1,43 @@
-import {onKeyDown} from "@/functions/useKeyboard";
+import {computeCurrentMouse, mouseNDC, raycaster} from "@/functions/useMath";
+import {perspectiveCamera} from "@/functions/useCamera";
+import {mode, POINTS} from "@/store/global";
+import {MODE} from "@/types/global";
+import {ANNOTATIONS, dotHelper, SCENE} from "@/functions/useScene";
+import {BufferAttribute, Points, Vector3} from "three";
 import {render} from "@/functions/useRender";
-import {computeCurrentMouse} from "@/functions/useMouse";
+import {INF} from "@/config/labels";
 
 export function initEventListeners() {
-  window.addEventListener('resize', render, false);
-
   const perspective = document.getElementById('perspective') as HTMLElement;
   perspective.addEventListener('mousemove', onMousemove);
   perspective.addEventListener('mousedown', onMousedown);
   perspective.addEventListener('mouseup', onMouseup);
 
-  document.addEventListener('keydown', onKeyDown);
-
   function onMousemove(e: MouseEvent) {
     computeCurrentMouse(e);
+    if (mode.value !== MODE.default) return;
+    raycaster.setFromCamera(mouseNDC, perspectiveCamera);
+    raycaster.params = {Points: {threshold: 0.1}, Line: {threshold: 0}};
+    const intersected = raycaster.intersectObject(ANNOTATIONS, true);
+    if (intersected.length > 0) {
+      const INTERSECTED = intersected[0];
+      if (INTERSECTED.object.type === 'Points') {
+        dotHelper.position.copy(new Vector3().fromBufferAttribute(
+          POINTS.value.geometry.getAttribute('position') as BufferAttribute,
+          INTERSECTED.index as number));
+      } else if (INTERSECTED.object.type === 'Mesh') {
+
+      }
+    } else {
+      dotHelper.position.set(INF, INF, INF);
+    }
+    render();
   }
 
-  function onMousedown(e: MouseEvent){
-
+  function onMousedown(e: MouseEvent) {
   }
 
-  function onMouseup(e:MouseEvent){
+  function onMouseup(e: MouseEvent) {
 
   }
 }

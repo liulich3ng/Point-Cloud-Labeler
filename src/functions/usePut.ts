@@ -1,4 +1,4 @@
-import {mouseToGround} from "@/functions/useMouse";
+import {mouseToGround} from "@/functions/useMath";
 import {render} from "@/functions/useRender";
 import {currentFrame, mode} from "@/store/global";
 import {MODE} from "@/types/global";

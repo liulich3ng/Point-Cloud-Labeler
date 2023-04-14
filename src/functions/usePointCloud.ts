@@ -8,8 +8,8 @@ import {
   Points,
   PointsMaterial, Vector3
 } from "three";
-import {raycaster} from "@/functions/useMouse";
-import {drawHelper} from "@/functions/useScene";
+import {raycaster} from "@/functions/useMath";
+import {cuboidHelper} from "@/functions/useScene";
 
 
 const DB = 'PCDDatabase';
