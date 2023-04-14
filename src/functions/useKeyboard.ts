@@ -2,7 +2,11 @@ import {mode} from "@/store/global";
 import {MODE} from "@/types/global";
 import {resetCamera} from "@/functions/useCamera";
 
-export function onKeyDown(e: KeyboardEvent) {
+export function initKeyboard() {
+  document.addEventListener('keydown', onKeyDown);
+}
+
+function onKeyDown(e: KeyboardEvent) {
   switch (e.key) {
     case 'Escape':
       mode.value = MODE.default;

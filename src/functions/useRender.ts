@@ -20,6 +20,7 @@ export function initRenderer() {
     powerPreference: 'high-performance',
     alpha: true
   });
+  window.addEventListener('resize', render, false);
 }
 
 export function render() {

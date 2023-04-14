@@ -18,3 +18,5 @@ export const labels: PointCloudLabel[] = [
     defaultSize: {x: 8, y: 2.6, z: 3}
   },
 ];
+
+export const GROW = 0.005;

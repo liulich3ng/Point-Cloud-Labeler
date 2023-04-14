@@ -18,12 +18,14 @@ import {initWatcher} from "@/functions/useWatcher";
 import {initEventListeners} from "@/functions/useListener";
 import {initDragHelper} from "@/functions/useDrag";
 import {initPutHelper} from "@/functions/usePut";
+import {initKeyboard} from "@/functions/useKeyboard";
 
 onMounted(() => {
   initRenderer();
   initCamera();
   initWatcher();
   initEventListeners();
+  initKeyboard();
   initDragHelper();
   initPutHelper();
 });
