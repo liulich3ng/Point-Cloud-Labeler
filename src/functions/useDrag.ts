@@ -10,7 +10,7 @@ import {makeCuboid} from "@/functions/useCuboid";
 import {SCENE} from "@/functions/useScene";
 import {Shape} from "@/cores/annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
-import {BBox} from "@/cores/geometry";
+import {BBox} from "@/cores/BBox";
 // todo: usage
 // todo: select box color
 // todo: 新增标注物会导致点云颜色重新绘制？

@@ -1,6 +1,7 @@
 import {groundHeight} from "@/store/global";
 import {Raycaster, Vector2, Vector3} from "three";
 import {perspectiveCamera} from "@/functions/useCamera";
+import {BBox} from "@/cores/BBox";
 
 export const raycaster = new Raycaster();
 // mouse position in camera's normalized device coordinate (NDC)
@@ -37,6 +38,13 @@ export function mouseToGround(e: MouseEvent) {
   return pos.setZ(groundHeight.value);
 }
 
-export function grow(seeds: Vector3[]) {
+export function grow(seeds: Vector3[], bbox: BBox, threshold = 0.005) {
+  const center = bbox.getCenter();
+  const scale = bbox.getScale().multiplyScalar(0.35);
+  seeds.forEach((seed) => {
+    if (seed.z > center.z - scale.z) {
+
+    }
+  });
 
 }
