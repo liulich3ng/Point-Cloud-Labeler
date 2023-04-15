@@ -48,4 +48,8 @@ export class BBox {
   clone() {
     return new BBox(this.maxX, this.minX, this.maxY, this.minY, this.maxZ, this.minZ);
   }
+
+  multiplyScalar(){
+
+  }
 }
