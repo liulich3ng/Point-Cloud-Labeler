@@ -82,8 +82,9 @@ export function initDragHelper() {
       }
     }
     if (selectedPoints.length < 10) return;
-    grow(selectedPoints, bbox);
-    const center = bbox.getCenter();
+    let center = bbox.getCenter();
+    grow(selectedPoints, bbox,0.05*center.length());
+    center = bbox.getCenter();
     const scale = bbox.getScale();
     center.applyAxisAngle(axisZ, angle);
     const points = [

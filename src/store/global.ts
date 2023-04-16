@@ -23,3 +23,5 @@ export const FramesCount = computed(() => {
 });
 
 export const groundHeight = ref(0);
+
+export const seedArea = 0.4;

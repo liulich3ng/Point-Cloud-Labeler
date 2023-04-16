@@ -1,6 +1,5 @@
 import {INF} from "@/config/labels";
 import {Vector3} from "three";
-import {max} from "three/examples/jsm/nodes/shadernode/ShaderNodeBaseElements";
 
 export class BBox {
   maxX;
@@ -9,7 +8,6 @@ export class BBox {
   minY;
   maxZ;
   minZ;
-  update = false;
 
   constructor(maxX: number = -INF, minX: number = INF,
               maxY: number = -INF, minY: number = INF,
@@ -33,8 +31,32 @@ export class BBox {
       if (point.y > this.maxY) this.maxY = point.y; else if (point.y < this.minY) this.minY = point.y;
       if (point.z > this.maxZ) this.maxZ = point.z; else if (point.z < this.minZ) this.minZ = point.z;
     } else {
-
+      if (point.x > this.maxX && point.x < this.maxX + threshold) {
+        this.maxX = point.x;
+        return true;
+      }
+      if (point.x < this.minX && point.x > this.minX - threshold) {
+        this.minX = point.x;
+        return true;
+      }
+      if (point.y > this.maxY && point.y < this.maxY + threshold) {
+        this.maxY = point.y;
+        return true;
+      }
+      if (point.y < this.minY && point.y > this.minY - threshold) {
+        this.minY = point.y;
+        return true;
+      }
+      if (point.z > this.maxZ && point.z < this.maxZ + threshold) {
+        this.maxZ = point.z;
+        return true;
+      }
+      if (point.z < this.minZ && point.z > this.minZ - threshold) {
+        this.minZ = point.z;
+        return true;
+      }
     }
+    return false;
   }
 
 
@@ -60,5 +82,14 @@ export class BBox {
     this.maxZ = center.z + scale.z;
     this.minZ = center.z - scale.z;
     return this;
+  }
+
+  contains(point: Vector3) {
+    return point.x <= this.maxX
+      && point.x >= this.minX
+      && point.y <= this.maxY
+      && point.y >= this.minY
+      && point.z <= this.maxZ
+      && point.z >= this.minZ;
   }
 }

@@ -1,4 +1,4 @@
-import {groundHeight} from "@/store/global";
+import {groundHeight, seedArea} from "@/store/global";
 import {Raycaster, Vector2, Vector3} from "three";
 import {perspectiveCamera} from "@/functions/useCamera";
 import {BBox} from "@/cores/BBox";
@@ -38,12 +38,25 @@ export function mouseToGround(e: MouseEvent) {
   return pos.setZ(groundHeight.value);
 }
 
-export function grow(seeds: Vector3[], bbox: BBox, threshold = 0.005) {
+export function grow(seeds: Vector3[], bbox: BBox, threshold = 0.05) {
+  const inBox: boolean[] = [];
   const center = bbox.getCenter();
-  const scale = bbox.multiplyScalar(0.7).getScale().multiplyScalar(1 / 2);
-  seeds.forEach((seed) => {
-    if (seed.z > center.z - scale.z) {
-
-    }
-  });
+  const halfSeedScale = bbox.multiplyScalar(seedArea).getScale().multiplyScalar(1 / 2);
+  let iteration = 20000;
+  let next = true;
+  while (iteration-- && next) {
+    next = false;
+    seeds.forEach((seed, index) => {
+      if (inBox[index]) return;
+      if (bbox.contains(seed)) {
+        inBox[index] = true;
+        return;
+      }
+      if (seed.z > center.z - halfSeedScale.z) {
+        if (bbox.grow(seed, threshold)) {
+          next = true;
+        }
+      }
+    });
+  }
 }
