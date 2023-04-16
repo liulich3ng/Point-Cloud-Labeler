@@ -6,5 +6,6 @@ export enum MODE {
 
 export enum Panels {
   OBJECTS = 'Object List',
-  LABELS = 'Label List'
+  LABELS = 'Label List',
+  CONFIG = 'Config'
 }

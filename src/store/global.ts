@@ -1,4 +1,4 @@
-import {computed, ref, shallowReactive} from "vue";
+import {computed, reactive, ref, shallowReactive} from "vue";
 import {MODE, Panels} from "@/types/global";
 import {Points} from "three";
 
@@ -25,3 +25,9 @@ export const FramesCount = computed(() => {
 export const groundHeight = ref(0);
 
 export const seedArea = 0.4;
+
+export const visualConfig = reactive({
+  showSelectedObjectOnly: false,
+  showObjectDetail: false,
+  showGround: false,
+})

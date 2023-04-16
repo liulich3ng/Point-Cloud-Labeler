@@ -3,12 +3,17 @@
         <ghost-icon placement="right" :tooltip="Panels.OBJECTS"
                     :pressed="activityPanelName===Panels.OBJECTS"
                     @click="toggleActivityPanel(Panels.OBJECTS)">
-            <bookmarks-outline/>
+            <list/>
         </ghost-icon>
         <ghost-icon placement="right" :tooltip="Panels.LABELS"
                     :pressed="activityPanelName===Panels.LABELS"
                     @click="toggleActivityPanel(Panels.LABELS)">
-            <grid-outline/>
+            <bookmarks-outline/>
+        </ghost-icon>
+        <ghost-icon placement="right" :tooltip="Panels.CONFIG"
+                    :pressed="activityPanelName===Panels.CONFIG"
+                    @click="toggleActivityPanel(Panels.CONFIG)">
+            <options/>
         </ghost-icon>
     </n-space>
 </template>
@@ -16,8 +21,9 @@
 <script setup lang="ts">
 //todo: using v-for?
 import {
+  List,
   BookmarksOutline,
-  GridOutline,
+  Options,
 } from '@vicons/ionicons5'
 import GhostIcon from "@/components/GhostIcon.vue";
 import {NSpace} from 'naive-ui'
