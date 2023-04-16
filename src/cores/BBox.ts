@@ -9,6 +9,7 @@ export class BBox {
   minY;
   maxZ;
   minZ;
+  update = false;
 
   constructor(maxX: number = -INF, minX: number = INF,
               maxY: number = -INF, minY: number = INF,
@@ -49,7 +50,15 @@ export class BBox {
     return new BBox(this.maxX, this.minX, this.maxY, this.minY, this.maxZ, this.minZ);
   }
 
-  multiplyScalar(){
-
+  multiplyScalar(s: number) {
+    const center = this.getCenter();
+    const scale = this.getScale().multiplyScalar(s / 2);
+    this.maxX = center.x + scale.x;
+    this.minX = center.x - scale.x;
+    this.maxY = center.y + scale.y;
+    this.minY = center.y - scale.y;
+    this.maxZ = center.z + scale.z;
+    this.minZ = center.z - scale.z;
+    return this;
   }
 }

@@ -40,11 +40,10 @@ export function mouseToGround(e: MouseEvent) {
 
 export function grow(seeds: Vector3[], bbox: BBox, threshold = 0.005) {
   const center = bbox.getCenter();
-  const scale = bbox.getScale().multiplyScalar(0.35);
+  const scale = bbox.multiplyScalar(0.7).getScale().multiplyScalar(1 / 2);
   seeds.forEach((seed) => {
     if (seed.z > center.z - scale.z) {
 
     }
   });
-
 }
