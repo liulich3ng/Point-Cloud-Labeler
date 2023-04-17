@@ -11,15 +11,18 @@
  *    - ...
  */
 import {
-  AxesHelper, BufferAttribute,
+  AxesHelper,
+  BufferAttribute,
   BufferGeometry,
+  GridHelper,
   Group,
+  Material,
   Points,
   PointsMaterial,
-  Scene
+  Scene,
 } from "three";
 import {makeCuboid} from "@/functions/useCuboid";
-import {POINTS} from "@/store/global";
+import {POINTS, visualConfig} from "@/store/global";
 import {annotationObjectsAtCurrentFrame} from "@/store/annotations";
 
 export const SCENE = new Scene();
@@ -38,6 +41,9 @@ export function makeScene() {
   ANNOTATIONS.clear();
 
   SCENE.add(HELPERS);
+  ((HELPERS.getObjectByName('gridHelper') as GridHelper)
+    .material as Material)
+    .visible = visualConfig.showGround;
 
   ANNOTATIONS.add(POINTS.value);
 
@@ -62,7 +68,12 @@ function initHelpers() {
     })
   );
 
+  const gridHelper = new GridHelper(1000, 1000);
+  gridHelper.rotation.x = Math.PI / 2;
+  gridHelper.name = 'gridHelper';
+
   HELPERS.add(axesHelper);
+  HELPERS.add(gridHelper);
   HELPERS.add(dotHelper);
   HELPERS.add(cuboidHelper);
 }
