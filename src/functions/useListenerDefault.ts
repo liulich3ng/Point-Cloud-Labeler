@@ -7,7 +7,7 @@ import {BufferAttribute, Points, Vector3} from "three";
 import {render} from "@/functions/useRender";
 import {INF} from "@/config/labels";
 
-export function initEventListeners() {
+export function initDefaultListeners() {
   const perspective = document.getElementById('perspective') as HTMLElement;
   perspective.addEventListener('mousemove', onMousemove);
   perspective.addEventListener('mousedown', onMousedown);

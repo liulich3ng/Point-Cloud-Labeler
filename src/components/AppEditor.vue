@@ -15,19 +15,19 @@ import {onMounted} from "vue";
 import {initRenderer} from "@/functions/useRender";
 import {initCamera} from "@/functions/useCamera";
 import {initWatcher} from "@/functions/useWatcher";
-import {initEventListeners} from "@/functions/useListener";
-import {initDragHelper} from "@/functions/useDrag";
-import {initPutHelper} from "@/functions/usePut";
+import {initDefaultListeners} from "@/functions/useListenerDefault";
+import {initDragListener} from "@/functions/useListenerDrag";
+import {initPutListener} from "@/functions/useListenerPut";
 import {initKeyboard} from "@/functions/useKeyboard";
 
 onMounted(() => {
   initRenderer();
   initCamera();
   initWatcher();
-  initEventListeners();
+  initDefaultListeners();
   initKeyboard();
-  initDragHelper();
-  initPutHelper();
+  initDragListener();
+  initPutListener();
 });
 </script>
 

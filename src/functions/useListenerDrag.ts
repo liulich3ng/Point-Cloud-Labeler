@@ -14,7 +14,7 @@ import {BBox} from "@/cores/BBox";
 import {grow} from "@/functions/useMath";
 // todo: select box color
 // todo: 新增标注物会导致点云颜色重新绘制？
-export function initDragHelper() {
+export function initDragListener() {
   const element = document.createElement('div');
   element.classList.add('select-box');
   element.style.pointerEvents = 'none';

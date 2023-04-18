@@ -6,7 +6,7 @@ import {cuboidHelper} from "@/functions/useScene";
 import {Shape} from "@/cores/annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 
-export function initPutHelper() {
+export function initPutListener() {
   const perspective = document.getElementById('perspective') as HTMLElement;
   perspective.addEventListener('mousemove', onwMousemove);
   perspective.addEventListener('mousedown', onMousedown);
@@ -24,7 +24,7 @@ export function initPutHelper() {
   }
 
   function onMouseup(e: MouseEvent) {
-    if (e.button !== 0) return;
+    if (e.button !== 0 || mode.value !== MODE.put) return;
     const points: number[] = [
       cuboidHelper.scale.x,
       cuboidHelper.scale.y,
