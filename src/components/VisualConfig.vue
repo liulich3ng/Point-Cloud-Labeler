@@ -27,9 +27,11 @@ import {visualConfig} from "@/store/global";
     align-items: center;
     width: 100%;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 .config-item {
+    /*box-sizing: border-box;*/
     width: 100%;
     display: flex;
     justify-content: space-between;
