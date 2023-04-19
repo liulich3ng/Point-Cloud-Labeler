@@ -63,7 +63,7 @@ function initHelpers() {
     dotHelperGeometry,
     new PointsMaterial({
       size: 10,
-      color: '#00ff00',
+      color: '#ffff00',
       sizeAttenuation: false
     })
   );
