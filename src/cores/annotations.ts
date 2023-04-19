@@ -1,6 +1,6 @@
-import {Label, ShapeType} from "@/cores/labels";
-import {reactive} from "vue";
+import {Label} from "@/cores/labels";
 import {annotationCounter} from "@/store/counter";
+import {annotationObjects} from "@/store/annotations";
 
 export interface ObjectState {
   id: number,
@@ -18,8 +18,8 @@ interface Shape {
 export class Annotation {
   public id: number;
   public label: Label;
-  public locked: boolean;
-  public hidden: boolean;
+  private locked: boolean;
+  private hidden: boolean;
   public shapes: Shape[];
 
   constructor(label: Label, frame: number, points: number[], id = -1) {
@@ -36,9 +36,23 @@ export class Annotation {
     }];
   }
 
+  toggleVisibility() {
+    this.hidden = !this.hidden;
+  }
+
+  toggleLock() {
+    this.locked = !this.locked;
+  }
+
+  delete() {
+    const index = annotationObjects.findIndex(annotationObject => annotationObject.id === this.id);
+    if (index >= 0)
+      annotationObjects.splice(index, 1);
+  }
+
   atFrame(frame: number): ObjectState | null {
     for (const shape of this.shapes) {
-      if(shape.frame===frame){
+      if (shape.frame === frame) {
         return {
           id: this.id,
           label: this.label,
@@ -49,5 +63,9 @@ export class Annotation {
       }
     }
     return null;
+  }
+
+  deleteFrame(frame: number) {
+
   }
 }

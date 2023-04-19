@@ -3,7 +3,6 @@ import {labels} from "@/config/labels";
 import {Annotation, ObjectState} from "@/cores/annotations";
 import {currentFrame} from "@/store/global";
 
-
 export const currentLabelIndex = ref(0);
 
 export const currentLabel = computed(() => {

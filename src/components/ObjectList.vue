@@ -30,9 +30,10 @@ import {
 } from "@/store/annotations";
 import ObjectDetail from "@/components/ObjectDetail.vue";
 import {NScrollbar, NIcon} from 'naive-ui';
-import {AlertCircleOutline, EyeOutline, EyeOffOutline, CloseCircleOutline} from '@vicons/ionicons5';
-import {visualConfig} from "@/store/global";
-import {Annotation, ObjectState} from "@/cores/annotations";
+import {AlertCircleOutline, EyeOutline, CloseCircleOutline} from '@vicons/ionicons5';
+import {Annotation} from "@/cores/annotations";
+import {currentFrame} from "@/store/global";
+
 
 function handle(event: PointerEvent, objectId: number) {
   let iconButton = (event.target as HTMLElement).closest('.icon');
@@ -42,14 +43,16 @@ function handle(event: PointerEvent, objectId: number) {
   }) as Annotation;
   switch (iconButton.id) {
     case 'hidden-btn':
-      annotation.hidden = !annotation.hidden;
+      annotation.toggleVisibility();
       break;
     case 'lock-btn':
-      annotation.locked = !annotation.locked;
+      annotation.toggleLock();
       break;
     case 'remove-btn':
+      annotation.deleteFrame(currentFrame.value);
       break;
     case 'delete-btn':
+      annotation.delete();
       break;
   }
 }
