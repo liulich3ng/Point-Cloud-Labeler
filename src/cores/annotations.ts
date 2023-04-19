@@ -47,7 +47,7 @@ export class Shape extends Annotation {
         hidden: this.hidden,
         locked: this.locked,
         points: this.points,
-      }
+      };
     }
     return null;
   }

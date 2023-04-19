@@ -1,17 +1,21 @@
 <template>
-  <div class="detail">
-    <div style="display:flex;align-items: center">
+  <div class="center detail">
+    <div class="center">
       <cube-outline v-if="objectState.label.type==='cuboid'" class="colored icon"></cube-outline>
       <span> #{{ objectState.id }} </span>
     </div>
     <span> {{ objectState.label.name }} </span>
-    <div style="display:flex;align-items: center;gap: 5px">
-      <eye-off-outline v-if="objectState.hidden" class="icon"></eye-off-outline>
-      <eye-outline v-else class="icon"></eye-outline>
-      <lock-closed-outline v-if="objectState.locked" class="icon"></lock-closed-outline>
-      <lock-open-outline v-else class="icon"></lock-open-outline>
-      <remove-circle-outline class="icon"></remove-circle-outline>
-      <trash-outline class="icon"></trash-outline>
+    <div class="center" style="gap: 5px">
+      <div id="hidden-btn" class="icon center">
+        <eye-off-outline v-if="objectState.hidden"></eye-off-outline>
+        <eye-outline v-else></eye-outline>
+      </div>
+      <div id="lock-btn" class="icon center">
+        <lock-closed-outline v-if="objectState.locked" class="icon"></lock-closed-outline>
+        <lock-open-outline v-else class="icon"></lock-open-outline>
+      </div>
+      <remove-circle-outline id="remove-btn" class="icon"></remove-circle-outline>
+      <trash-outline id="delete-btn" class="icon"></trash-outline>
     </div>
   </div>
 </template>
@@ -43,15 +47,14 @@ const objectState = defineProps<ObjectState>();
 
 <style scoped>
 .detail {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
   margin: 0 10px 10px;
   padding: 5px;
   border-radius: 3px;
   border: 1px solid v-bind('objectState.label.color+80');
   background-color: v-bind('objectState.label.color+60');
   user-select: none;
+  height: 32px;
 }
 
 .icon {
@@ -62,5 +65,10 @@ const objectState = defineProps<ObjectState>();
 
 .colored {
   color: v-bind('objectState.label.color');
+}
+
+.center {
+  display: flex;
+  align-items: center;
 }
 </style>

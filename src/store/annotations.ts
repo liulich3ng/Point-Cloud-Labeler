@@ -8,19 +8,19 @@ export const currentLabelIndex = ref(0);
 
 export const currentLabel = computed(() => {
   return labels[currentLabelIndex.value];
-})
+});
 
 export const annotationObjects = reactive<Annotation[]>([]);
 
 export const annotationObjectsAtCurrentFrame = computed(
   () => {
-    const res: ObjectState[] = []
+    const res: ObjectState[] = [];
     annotationObjects.forEach(annotation => {
       const annotationAtCurrentFrame = annotation.atFrame(currentFrame.value);
       if (annotationAtCurrentFrame !== null) {
         res.push(annotationAtCurrentFrame);
       }
-    })
+    });
     return res;
   }
 );

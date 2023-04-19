@@ -16,7 +16,8 @@
     </div>
 
     <n-scrollbar style="max-height: calc(100vh - var(--header-height)*2 - var(--footer-height))">
-      <object-detail v-for="objectState in annotationObjectsAtCurrentFrame" v-bind="objectState"></object-detail>
+      <object-detail v-for="objectState in annotationObjectsAtCurrentFrame" v-bind="objectState"
+                     @click="handle($event, objectState.id)"></object-detail>
     </n-scrollbar>
 
   </div>
@@ -28,9 +29,30 @@ import {
   annotationObjectsAtCurrentFrame
 } from "@/store/annotations";
 import ObjectDetail from "@/components/ObjectDetail.vue";
-import {NScrollbar, NIcon} from 'naive-ui'
-import {AlertCircleOutline, EyeOutline, EyeOffOutline, CloseCircleOutline} from '@vicons/ionicons5'
+import {NScrollbar, NIcon} from 'naive-ui';
+import {AlertCircleOutline, EyeOutline, EyeOffOutline, CloseCircleOutline} from '@vicons/ionicons5';
 import {visualConfig} from "@/store/global";
+import {Annotation, ObjectState} from "@/cores/annotations";
+
+function handle(event: PointerEvent, objectId: number) {
+  let iconButton = (event.target as HTMLElement).closest('.icon');
+  if (!iconButton) return;
+  const annotation = annotationObjects.find(a => {
+    return a.id === objectId;
+  }) as Annotation;
+  switch (iconButton.id) {
+    case 'hidden-btn':
+      annotation.hidden = !annotation.hidden;
+      break;
+    case 'lock-btn':
+      annotation.locked = !annotation.locked;
+      break;
+    case 'remove-btn':
+      break;
+    case 'delete-btn':
+      break;
+  }
+}
 </script>
 
 <style scoped>
