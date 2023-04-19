@@ -1,5 +1,3 @@
-import {Vector3} from "three";
-
 export interface Attribute {
   readonly name: string;
   readonly mutable: boolean;

@@ -3,7 +3,7 @@ import {render} from "@/functions/useRender";
 import {currentFrame, mode} from "@/store/global";
 import {MODE} from "@/types/global";
 import {cuboidHelper} from "@/functions/useScene";
-import {Shape} from "@/cores/annotations";
+import {Annotation} from "@/cores/annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 
 export function initPutListener() {
@@ -36,7 +36,7 @@ export function initPutListener() {
       cuboidHelper.rotation.y,
       cuboidHelper.rotation.z,
     ];
-    const shape = new Shape(currentLabel.value, currentFrame.value, points);
+    const shape = new Annotation(currentLabel.value, currentFrame.value, points);
     annotationObjects.push(shape);
   }
 }

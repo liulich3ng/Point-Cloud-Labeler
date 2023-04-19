@@ -1,14 +1,8 @@
-import {BufferAttribute, BufferGeometry, Color, Vector2, Vector3} from 'three';
+import {BufferAttribute, Vector2, Vector3} from 'three';
 import {currentFrame, mode, POINTS} from "@/store/global";
 import {MODE} from "@/types/global";
 import {perspectiveCamera, perspectiveControl} from "@/functions/useCamera";
-import {
-  positionWorldDirection
-} from "three/examples/jsm/nodes/shadernode/ShaderNodeBaseElements";
-import {INF} from "@/config/labels";
-import {makeCuboid} from "@/functions/useCuboid";
-import {SCENE} from "@/functions/useScene";
-import {Shape} from "@/cores/annotations";
+import {Annotation} from "@/cores/annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 import {BBox} from "@/cores/BBox";
 import {grow} from "@/functions/useMath";
@@ -97,7 +91,7 @@ export function initDragListener() {
       0,
       angle
     ];
-    const shape = new Shape(currentLabel.value, currentFrame.value, points);
+    const shape = new Annotation(currentLabel.value, currentFrame.value, points);
     annotationObjects.push(shape);
   }
 }

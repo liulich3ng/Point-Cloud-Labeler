@@ -11,8 +11,8 @@
         <eye-outline v-else></eye-outline>
       </div>
       <div id="lock-btn" class="icon center">
-        <lock-closed-outline v-if="objectState.locked" class="icon"></lock-closed-outline>
-        <lock-open-outline v-else class="icon"></lock-open-outline>
+        <lock-closed-outline v-if="objectState.locked"></lock-closed-outline>
+        <lock-open-outline v-else></lock-open-outline>
       </div>
       <remove-circle-outline id="remove-btn" class="icon"></remove-circle-outline>
       <trash-outline id="delete-btn" class="icon"></trash-outline>
