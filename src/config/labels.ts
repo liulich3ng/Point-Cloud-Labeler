@@ -1,4 +1,4 @@
-import {PointCloudLabel} from "@/cores/labels";
+import {PointCloudLabel} from "@/cores/Labels";
 
 export const INF = 10000;
 

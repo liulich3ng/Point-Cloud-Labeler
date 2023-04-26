@@ -1,5 +1,5 @@
 import {PCDData, PCDHeader} from "@/types/pcd";
-import {items, POINTS, PointsRecord} from "@/store/global";
+import {items, pointCloud, pointClouds} from "@/store/global";
 import {
   BufferAttribute,
   BufferGeometry,
@@ -31,11 +31,11 @@ export function loadPCD() {
       const request = transaction.objectStore(TABLE).get(url);
       request.onsuccess = () => {
         if (request.result) {
-          PointsRecord[index] = makePoints(request.result);
+          pointClouds[index] = makePoints(request.result);
         } else {
           // otherwise load from remote
           loadPCDFromRemote(url).then(data => {
-            PointsRecord[index] = makePoints(data);
+            pointClouds[index] = makePoints(data);
             const transaction = db.transaction(TABLE, 'readwrite');
             transaction.objectStore(TABLE).add(data);
           }).catch(e => {
@@ -204,7 +204,7 @@ function makePoints(data: PCDData) {
 export function getPointsInBoxBF(box: Object3D) {
   const time = Date.now();
   let count = 0;
-  const positions = POINTS.value.geometry.getAttribute("position") as BufferAttribute;
+  const positions = pointCloud.value.geometry.getAttribute("position") as BufferAttribute;
   const corner1 = new Vector3(-Infinity, -Infinity, -Infinity);
   const corner2 = new Vector3(Infinity, Infinity, Infinity);
   for (let i = 0; i < positions.count; ++i) {
@@ -234,8 +234,8 @@ export function getPointsInBoxBF(box: Object3D) {
 export function getPointsInBox(box: Mesh) {
   const time = Date.now();
   let count = 0;
-  const positions = POINTS.value.geometry.getAttribute("position") as BufferAttribute;
-  const colors = POINTS.value.geometry.getAttribute("color") as BufferAttribute;
+  const positions = pointCloud.value.geometry.getAttribute("position") as BufferAttribute;
+  const colors = pointCloud.value.geometry.getAttribute("color") as BufferAttribute;
   const corner1 = new Vector3(-Infinity, -Infinity, -Infinity);
   const corner2 = new Vector3(Infinity, Infinity, Infinity);
   const cursor = new Vector3();

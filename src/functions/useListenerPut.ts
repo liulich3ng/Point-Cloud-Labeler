@@ -3,7 +3,7 @@ import {render} from "@/functions/useRender";
 import {currentFrame, mode} from "@/store/global";
 import {MODE} from "@/types/global";
 import {cuboidHelper} from "@/functions/useScene";
-import {Annotation} from "@/cores/annotations";
+import {Annotation} from "@/cores/Annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 
 export function initPutListener() {

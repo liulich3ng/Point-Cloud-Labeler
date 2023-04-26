@@ -22,7 +22,7 @@ import {
   Scene,
 } from "three";
 import {makeCuboid} from "@/functions/useCuboid";
-import {POINTS, visualConfig} from "@/store/global";
+import {pointCloud, visualConfig} from "@/store/global";
 import {annotationObjectsAtCurrentFrame} from "@/store/annotations";
 
 export const SCENE = new Scene();
@@ -34,7 +34,7 @@ export const cuboidHelper = makeCuboid();
 initHelpers();
 
 export function makeScene() {
-  if (!POINTS.value) {
+  if (!pointCloud.value) {
     return;
   }
   SCENE.clear();
@@ -45,7 +45,7 @@ export function makeScene() {
     .material as Material)
     .visible = visualConfig.showGround;
 
-  ANNOTATIONS.add(POINTS.value);
+  ANNOTATIONS.add(pointCloud.value);
 
   annotationObjectsAtCurrentFrame.value.forEach((annotation) => {
     const cuboid = makeCuboid(annotation.points, annotation.label.color);

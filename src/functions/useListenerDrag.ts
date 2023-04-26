@@ -1,8 +1,8 @@
 import {BufferAttribute, Vector2, Vector3} from 'three';
-import {currentFrame, mode, POINTS} from "@/store/global";
+import {currentFrame, mode, pointCloud} from "@/store/global";
 import {MODE} from "@/types/global";
 import {perspectiveCamera, perspectiveControl} from "@/functions/useCamera";
-import {Annotation} from "@/cores/annotations";
+import {Annotation} from "@/cores/Annotations";
 import {annotationObjects, currentLabel} from "@/store/annotations";
 import {BBox} from "@/cores/BBox";
 import {grow} from "@/functions/useMath";
@@ -56,7 +56,7 @@ export function initDragListener() {
     const axisZ = new Vector3(0, 0, 1);
 
     element.parentElement?.removeChild(element);
-    const position = POINTS.value.geometry.getAttribute('position') as BufferAttribute;
+    const position = pointCloud.value.geometry.getAttribute('position') as BufferAttribute;
     const point = new Vector3();
 
     const minX = (pointTopLeft.x / perspective.clientWidth) * 2 - 1;

@@ -12,16 +12,16 @@
       <play></play>
     </ghost-icon>
     <ghost-icon tooltip="next frame" placement="top"
-                @click="currentFrame=Math.min(currentFrame+1, FramesCount)">
+                @click="currentFrame=Math.min(currentFrame+1, totalFrames)">
       <play-forward></play-forward>
     </ghost-icon>
     <ghost-icon tooltip="last frame" placement="top"
-                @click="currentFrame=FramesCount">
+                @click="currentFrame=totalFrames">
       <play-skip-forward></play-skip-forward>
     </ghost-icon>
     <n-divider vertical></n-divider>
     <div class="frame-index" :class="{current:currentFrame===index}"
-         v-for="index in FramesCount" @click="currentFrame=index">
+         v-for="index in totalFrames" @click="currentFrame=index">
       {{ index }}
     </div>
   </div>
@@ -37,7 +37,7 @@ import {
 } from '@vicons/ionicons5'
 import {NDivider} from 'naive-ui'
 import GhostIcon from "@/components/GhostIcon.vue";
-import {currentFrame, FramesCount} from "@/store/global";
+import {currentFrame, totalFrames} from "@/store/global";
 </script>
 
 <style scoped>

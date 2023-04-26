@@ -27,10 +27,10 @@ import {
 } from '@vicons/ionicons5'
 import GhostIcon from "@/components/GhostIcon.vue";
 import {NSpace} from 'naive-ui'
-import {activityPanelName} from "@/store/global";
 import {Panels} from "@/types/global";
 import {render} from "@/functions/useRender";
 import {nextTick} from "vue";
+import {activityPanelName} from "@/store/ui";
 
 
 function toggleActivityPanel(panelName: string) {

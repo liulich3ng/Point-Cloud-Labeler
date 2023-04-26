@@ -31,7 +31,7 @@ import {
 import ObjectDetail from "@/components/ObjectDetail.vue";
 import {NScrollbar, NIcon} from 'naive-ui';
 import {AlertCircleOutline, EyeOutline, CloseCircleOutline} from '@vicons/ionicons5';
-import {Annotation} from "@/cores/annotations";
+import {Annotation} from "@/cores/Annotations";
 import {currentFrame} from "@/store/global";
 
 

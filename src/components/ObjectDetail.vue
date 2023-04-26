@@ -23,7 +23,7 @@
 <script setup lang="ts">
 // https://github.com/vuejs/core/issues/4294
 // import {ObjectState} from "@/cores/annotations";
-import {Label} from "@/cores/labels";
+import {Label} from "@/cores/Labels";
 import {
   CubeOutline,
   EyeOutline,

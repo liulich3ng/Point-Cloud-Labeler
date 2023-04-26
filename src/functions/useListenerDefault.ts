@@ -1,6 +1,6 @@
 import {computeCurrentMouse, mouseNDC, raycaster} from "@/functions/useMath";
 import {perspectiveCamera} from "@/functions/useCamera";
-import {mode, POINTS} from "@/store/global";
+import {mode, pointCloud} from "@/store/global";
 import {MODE} from "@/types/global";
 import {ANNOTATIONS, dotHelper, SCENE} from "@/functions/useScene";
 import {BufferAttribute, Points, Vector3} from "three";
@@ -23,7 +23,7 @@ export function initDefaultListeners() {
       const INTERSECTED = intersected[0];
       if (INTERSECTED.object.type === 'Points') {
         dotHelper.position.copy(new Vector3().fromBufferAttribute(
-          POINTS.value.geometry.getAttribute('position') as BufferAttribute,
+          pointCloud.value.geometry.getAttribute('position') as BufferAttribute,
           INTERSECTED.index as number));
       } else if (INTERSECTED.object.type === 'Mesh') {
 

@@ -7,11 +7,11 @@
 </template>
 
 <script setup lang="ts">
-import {activityPanelName} from "@/store/global";
 import {Panels} from "@/types/global";
 import ObjectList from "@/components/ObjectList.vue";
 import LabelList from "@/components/LabelList.vue";
 import VisualConfig from "@/components/VisualConfig.vue";
+import {activityPanelName} from "@/store/ui";
 </script>
 
 <style scoped>
