@@ -48,6 +48,7 @@ export function makeScene() {
   ANNOTATIONS.add(pointCloud.value);
 
   annotationObjectsAtCurrentFrame.value.forEach((annotation) => {
+    if(annotation.hidden) return;
     const cuboid = makeCuboid(annotation.points, annotation.label.color);
     ANNOTATIONS.add(cuboid);
   });
