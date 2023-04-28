@@ -1,11 +1,12 @@
 /**
- * One frame scene includes:
- *  - Point Cloud
+ * One frame have one SCENE. One SCENE includes:
  *  - Helpers:
- *    - AxesHelper
- *    - DrawHelper
- *    - DotHelper
+ *    - axesHelper
+ *    - cuboidHelper
+ *    - dotHelper
+ *    - gridHelper
  *  - Annotations
+ *    - Point Cloud
  *    - annotation1
  *    - annotation2
  *    - ...

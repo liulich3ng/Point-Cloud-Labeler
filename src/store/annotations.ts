@@ -23,3 +23,4 @@ export const annotationObjectsAtCurrentFrame = computed(
     return res;
   }
 );
+

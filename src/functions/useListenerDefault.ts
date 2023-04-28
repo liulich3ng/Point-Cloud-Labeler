@@ -26,7 +26,7 @@ export function initDefaultListeners() {
           pointCloud.value.geometry.getAttribute('position') as BufferAttribute,
           INTERSECTED.index as number));
       } else if (INTERSECTED.object.type === 'Mesh') {
-
+        console.log(INTERSECTED.object);
       }
     } else {
       dotHelper.position.set(INF, INF, INF);
